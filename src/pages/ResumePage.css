@@ -1,0 +1,385 @@
+.resume-page {
+  min-height: 100vh;
+  padding: 35px 20px 60px;
+  background: #080808;
+  color: #222;
+}
+
+/* Toolbar */
+
+.resume-toolbar {
+  width: min(900px, 100%);
+  margin: 0 auto 25px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.resume-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #171717;
+  border: 1px solid #333;
+  color: #ddd;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.resume-toolbar .resume-download {
+  background: #e50914;
+  border-color: #e50914;
+  color: #fff;
+}
+
+/* Document */
+
+.resume-document {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  padding: 65px 70px;
+  background: #fff;
+  box-shadow: 0 15px 70px rgba(0,0,0,.35);
+}
+
+.resume-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  padding-bottom: 35px;
+  border-bottom: 3px solid #e50914;
+}
+
+.resume-overline {
+  color: #e50914;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.resume-header h1 {
+  margin-top: 12px;
+  color: #111;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 66px;
+  font-weight: 400;
+  line-height: .95;
+  letter-spacing: 2px;
+}
+
+.resume-header-description {
+  margin-top: 12px;
+  color: #555;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 1.7;
+}
+
+.resume-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 10px;
+}
+
+.resume-contact span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #555;
+  font-size: 10px;
+}
+
+.resume-contact svg {
+  color: #e50914;
+  flex-shrink: 0;
+}
+
+/* Sections */
+
+.resume-block {
+  margin-top: 38px;
+}
+
+.resume-section-title {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 22px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.resume-section-title > span {
+  color: #e50914;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.resume-section-title h2 {
+  color: #151515;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.resume-summary {
+  color: #555;
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+/* Experience */
+
+.resume-experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.resume-experience {
+  break-inside: avoid;
+}
+
+.resume-experience-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.resume-experience h3 {
+  color: #171717;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.resume-experience h4 {
+  margin-top: 5px;
+  color: #e50914;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.resume-period {
+  color: #777;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.resume-experience > p {
+  margin-top: 12px;
+  color: #555;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.resume-experience ul {
+  margin-top: 9px;
+  padding-left: 17px;
+}
+
+.resume-experience li {
+  margin-bottom: 5px;
+  color: #555;
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+/* Skills */
+
+.resume-skills,
+.resume-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.resume-skills span,
+.resume-tools span {
+  padding: 8px 10px;
+  background: #f3f3f3;
+  color: #333;
+  font-size: 10px;
+}
+
+/* Education */
+
+.resume-education {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.resume-education > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.resume-education svg {
+  color: #e50914;
+  flex-shrink: 0;
+}
+
+.resume-education h3 {
+  color: #171717;
+  font-size: 12px;
+}
+
+.resume-education p {
+  margin-top: 5px;
+  color: #555;
+  font-size: 11px;
+}
+
+.resume-education span {
+  display: block;
+  margin-top: 5px;
+  color: #888;
+  font-size: 10px;
+}
+
+.resume-education > strong {
+  color: #e50914;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.secondary-education {
+  border-bottom: 0;
+}
+
+/* Footer */
+
+.resume-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 45px;
+  padding-top: 17px;
+  border-top: 2px solid #e50914;
+}
+
+.resume-footer span:first-child {
+  color: #171717;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 21px;
+  letter-spacing: 1px;
+}
+
+.resume-footer span:last-child {
+  align-self: center;
+  color: #888;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+
+.resume-bottom-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 25px;
+  color: #999;
+  font-size: 11px;
+}
+
+/* Responsive */
+
+@media (max-width: 650px) {
+  .resume-page {
+    padding: 15px 10px 40px;
+  }
+
+  .resume-document {
+    padding: 35px 25px;
+  }
+
+  .resume-header {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .resume-header h1 {
+    font-size: 55px;
+  }
+
+  .resume-contact {
+    gap: 10px;
+  }
+
+  .resume-experience-heading {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .resume-education {
+    align-items: flex-start;
+  }
+
+  .resume-footer {
+    flex-direction: column;
+  }
+}
+
+/* Print / Save as PDF */
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+
+  .resume-page {
+    padding: 0;
+    background: #fff;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .resume-document {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .resume-block {
+    break-inside: avoid;
+  }
+
+  .resume-experience {
+    break-inside: avoid;
+  }
+
+  .resume-education {
+    break-inside: avoid;
+  }
+
+  .resume-skills span,
+  .resume-tools span {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .resume-header,
+  .resume-section-title,
+  .resume-footer {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

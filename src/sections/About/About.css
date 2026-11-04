@@ -1,0 +1,268 @@
+.about-section {
+  padding: 110px 7%;
+  background: #080808;
+  color: #fff;
+}
+
+.about-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #292929;
+  color: #777;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.about-main {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 100px 0;
+}
+
+.about-small-label {
+  color: #e50914;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.about-heading h2 {
+  margin-top: 25px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(65px, 8vw, 110px);
+  font-weight: 400;
+  line-height: .9;
+}
+
+.about-heading h2 span {
+  display: block;
+}
+
+.about-heading .about-red-text {
+  color: #e50914;
+}
+
+.about-copy {
+  max-width: 520px;
+}
+
+.about-copy p {
+  margin-bottom: 22px;
+  color: #999;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.about-copy .about-lead {
+  color: #fff;
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+.about-location {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 35px;
+  color: #aaa;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.about-location-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e50914;
+}
+
+.about-location-divider {
+  color: #555;
+}
+
+/* Philosophy */
+
+.about-philosophy {
+  padding: 70px 0;
+  border-top: 1px solid #292929;
+}
+
+.about-philosophy-heading > span {
+  color: #e50914;
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.about-philosophy-heading h3 {
+  margin-top: 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+}
+
+.about-principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 35px;
+}
+
+.about-principle-card {
+  min-height: 220px;
+  padding: 25px;
+  background: #141414;
+  border: 1px solid #292929;
+  transition: border-color .25s ease,
+              transform .25s ease;
+}
+
+.about-principle-card:hover {
+  border-color: #555;
+  transform: translateY(-4px);
+}
+
+.about-principle-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #e50914;
+}
+
+.about-principle-top span {
+  font-size: 10px;
+  color: #777;
+}
+
+.about-principle-card h4 {
+  margin-top: 40px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.about-principle-card p {
+  margin-top: 12px;
+  color: #888;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* CTA */
+
+.about-cta {
+  padding: 70px 35px;
+  background: #141414;
+  border: 1px solid #292929;
+  text-align: center;
+}
+
+.about-cta > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #e50914;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.about-cta h3 {
+  margin: 25px 0 15px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(45px, 7vw, 78px);
+  font-weight: 400;
+  line-height: .95;
+}
+
+.about-cta h3 span {
+  display: block;
+  color: #e50914;
+}
+
+.about-cta > p {
+  color: #999;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.about-cta > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 15px 20px;
+  background: #e50914;
+  color: #fff;
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: background .25s ease;
+}
+
+.about-cta > a:hover {
+  background: #b80710;
+}
+
+/* Responsive */
+
+@media (max-width: 850px) {
+  .about-main {
+    grid-template-columns: 1fr;
+    gap: 45px;
+    padding: 75px 0;
+  }
+
+  .about-copy {
+    max-width: 650px;
+  }
+
+  .about-principles {
+    grid-template-columns: 1fr;
+  }
+
+  .about-principle-card {
+    min-height: auto;
+  }
+
+  .about-principle-card h4 {
+    margin-top: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-section {
+    padding: 75px 6%;
+  }
+
+  .about-topline {
+    font-size: 8px;
+  }
+
+  .about-heading h2 {
+    font-size: 68px;
+  }
+
+  .about-copy .about-lead {
+    font-size: 17px;
+  }
+
+  .about-philosophy-heading h3 {
+    font-size: 38px;
+  }
+
+  .about-cta {
+    padding: 50px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-principle-card,
+  .about-cta > a {
+    transition: none;
+  }
+}
