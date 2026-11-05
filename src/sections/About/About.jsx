@@ -105,7 +105,6 @@ function About() {
                         <span className="about-location-dot" />
                         <span>AHMEDABAD, INDIA</span>
                         <span className="about-location-divider">/</span>
-                        <span>RELOCATING SOON</span>
                     </div>
 
                     <div className="about-creative-fields">
