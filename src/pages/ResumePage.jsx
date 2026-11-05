@@ -118,12 +118,12 @@ function ResumePage() {
 
                         <span>
                             <Mail size={14} />
-                            [ADD YOUR EMAIL]
+                            krishpmodi@gmail.com
                         </span>
 
                         <span>
                             <ExternalLink size={14} />
-                            [ADD YOUR PORTFOLIO URL]
+                            https://krish-flix-six.vercel.app/
                         </span>
                     </div>
 
@@ -236,7 +236,7 @@ function ResumePage() {
                             <GraduationCap size={20} />
 
                             <div>
-                                <h3>[ADD SCHOOL NAME]</h3>
+                                <h3>Shree JMC Sarvajanik Vidyalaya</h3>
                                 <p>School Education</p>
                                 <span>Passed out 2021</span>
                             </div>
