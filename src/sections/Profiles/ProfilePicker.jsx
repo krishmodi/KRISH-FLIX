@@ -1,48 +1,56 @@
 
-import { useState } from 'react'
-import { ArrowRight, Check } from 'lucide-react'
+import {
+    BriefcaseBusiness,
+    Layers3,
+    Palette
+} from 'lucide-react'
+
 import { profiles } from '../../data/profiles'
 import './ProfilePicker.css'
 
-function ProfilePicker({ onSelect }) {
-    const [selectedProfile, setSelectedProfile] = useState(null)
-
-    const handleContinue = () => {
-        if (!selectedProfile) return
-
-        onSelect?.(selectedProfile)
+const profileDetails = {
+    recruiter: {
+        description: 'Explore my professional journey.',
+        label: 'PROFESSIONAL'
+    },
+    client: {
+        description: 'Discover what we can create together.',
+        label: 'CREATIVE PARTNERSHIP'
+    },
+    designer: {
+        description: 'Step inside my creative universe.',
+        label: 'EXPERIMENTAL'
     }
+}
 
+const profileIcons = {
+    recruiter: BriefcaseBusiness,
+    client: Layers3,
+    designer: Palette
+}
+
+function ProfilePicker({ onSelect }) {
     return (
-        <main className="profile-screen">
-
-            {/* Background */}
+        <main className="profile-screen profile-screen-v2">
             <div className="profile-background">
                 <div className="profile-glow" />
                 <div className="profile-vignette" />
             </div>
 
-            {/* Header */}
             <header className="profile-header">
-
                 <a href="/" className="profile-logo">
-                    KRISH MODI
-                    <span>®</span>
+                    KRISH<span>-FLIX</span>
                 </a>
 
                 <span className="profile-header-label">
-                    AN ORIGINAL DESIGN PORTFOLIO
+                    AN ORIGINAL PORTFOLIO EXPERIENCE
                 </span>
-
             </header>
 
-            {/* Main */}
-            <section className="profile-main">
-
-                <div className="profile-heading">
-
-                    <p className="profile-eyebrow">
-                        SEASON 01 &nbsp;·&nbsp; THE BEGINNING
+            <section className="profile-main profile-main-v2">
+                <div className="profile-heading profile-heading-v2">
+                    <p className="profile-v2-kicker">
+                        SELECT YOUR EXPERIENCE
                     </p>
 
                     <h1>
@@ -50,111 +58,45 @@ function ProfilePicker({ onSelect }) {
                     </h1>
 
                     <p className="profile-subheading">
-                        Choose your experience.
+                        Choose how you want to explore my work.
                     </p>
-
                 </div>
 
-                {/* Profile cards */}
-                <div className="profile-grid">
-
+                <div className="profile-grid profile-grid-v2">
                     {profiles.map((profile, index) => {
-
-                        const Icon = profile.icon
-
-                        const isSelected =
-                            selectedProfile?.id === profile.id
+                        const Icon = profileIcons[profile.id]
+                        const details = profileDetails[profile.id]
 
                         return (
                             <button
                                 key={profile.id}
-                                className={`profile-card ${isSelected ? 'selected' : ''
-                                    }`}
-                                onClick={() => setSelectedProfile(profile)}
-                                aria-pressed={isSelected}
-                                aria-label={`Select ${profile.name} profile`}
-                                style={{
-                                    '--profile-accent': profile.accent,
-                                    '--card-delay': `${index * 120}ms`
-                                }}
+                                type="button"
+                                className={`profile-card profile-card-v2 profile-${profile.id}`}
+                                onClick={() => onSelect?.(profile)}
+                                style={{ '--card-delay': `${index * 100}ms` }}
+                                aria-label={`Open ${profile.name} experience`}
                             >
-
                                 <div className="profile-avatar">
-
-                                    <div className="profile-avatar-inner">
-                                        <Icon size={43} strokeWidth={1.4} />
-                                    </div>
-
-                                    {isSelected && (
-                                        <div className="profile-check">
-                                            <Check size={16} />
-                                        </div>
-                                    )}
-
+                                    <Icon size={38} strokeWidth={1.5} />
                                 </div>
 
-                                <div className="profile-card-info">
+                                <h2>{profile.name}</h2>
 
-                                    <h2>{profile.name}</h2>
+                                <p>{details.description}</p>
 
-                                    <p>{profile.subtitle}</p>
-
-                                </div>
-
-                                <div className="profile-card-hover">
-                                    EXPLORE EXPERIENCE
-                                    <ArrowRight size={14} />
-                                </div>
-
+                                <span className="profile-card-label">
+                                    {details.label}
+                                </span>
                             </button>
                         )
                     })}
-
                 </div>
-
-                {/* Selected profile description */}
-                <div
-                    className={`profile-details ${selectedProfile ? 'visible' : ''
-                        }`}
-                    aria-live="polite"
-                >
-
-                    {selectedProfile ? (
-                        <>
-                            <p className="profile-details-title">
-                                {selectedProfile.name} EXPERIENCE
-                            </p>
-
-                            <p className="profile-details-description">
-                                {selectedProfile.description}
-                            </p>
-                        </>
-                    ) : (
-                        <p className="profile-details-hint">
-                            SELECT A PROFILE TO CONTINUE
-                        </p>
-                    )}
-
-                </div>
-
-                {/* Continue */}
-                <button
-                    className="profile-continue"
-                    disabled={!selectedProfile}
-                    onClick={handleContinue}
-                >
-                    CONTINUE
-                    <ArrowRight size={17} />
-                </button>
-
             </section>
 
-            {/* Footer */}
             <footer className="profile-footer">
                 <span>KRISH MODI © 2026</span>
-                <span>DESIGNED WITH INTENTION.</span>
+                <span>DESIGN. CREATE. REPEAT.</span>
             </footer>
-
         </main>
     )
 }

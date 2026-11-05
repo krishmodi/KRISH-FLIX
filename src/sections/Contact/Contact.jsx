@@ -1,6 +1,7 @@
 
 import { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
+
 import {
     ArrowUpRight,
     Send,
@@ -35,6 +36,12 @@ function Contact() {
             ...previous,
             [name]: value
         }))
+
+        // Clear old feedback when the visitor edits the form.
+        if (status !== 'sending') {
+            setStatus('idle')
+            setStatusMessage('')
+        }
     }
 
     const handleSubmit = async (event) => {
@@ -49,7 +56,7 @@ function Contact() {
         if (!serviceId || !templateId || !publicKey) {
             setStatus('error')
             setStatusMessage(
-                'Email service is not configured. Please check your EmailJS environment variables.'
+                'The email service is temporarily unavailable. Please contact me directly.'
             )
             return
         }
@@ -88,27 +95,26 @@ function Contact() {
             : ''
 
     const location = portfolio.location || 'Ahmedabad, India'
+    const availability =
+        portfolio.availability || 'Open to opportunities'
 
     return (
         <section className="contact-section" id="contact">
             <div className="contact-container">
 
-                {/* SECTION TOP BAR */}
                 <div className="contact-topbar">
                     <span className="contact-eyebrow">
                         07 / LET'S CONNECT
                     </span>
 
                     <span className="contact-availability">
-                        <span className="availability-dot"></span>
-                        OPEN TO OPPORTUNITIES
+                        <span className="availability-dot" />
+                        {availability.toUpperCase()}
                     </span>
                 </div>
 
-                {/* MAIN CONTENT */}
                 <div className="contact-layout">
 
-                    {/* LEFT SIDE */}
                     <div className="contact-intro">
                         <p className="contact-small-label">
                             HAVE A PROJECT IN MIND?
@@ -137,7 +143,7 @@ function Contact() {
                                         BASED IN
                                     </span>
                                     <p>{location}</p>
-                                    <small>Relocating soon</small>
+                                    <small>{portfolio.relocation || 'Available for opportunities'}</small>
                                 </div>
                             </div>
 
@@ -164,7 +170,6 @@ function Contact() {
                         </div>
                     </div>
 
-                    {/* RIGHT SIDE — CONTACT FORM */}
                     <div className="contact-form-wrapper">
 
                         <div className="contact-form-heading">
@@ -176,6 +181,7 @@ function Contact() {
                             ref={formRef}
                             className="contact-form"
                             onSubmit={handleSubmit}
+                            aria-busy={status === 'sending'}
                         >
 
                             <div className="contact-field">
@@ -193,6 +199,8 @@ function Contact() {
                                     autoComplete="name"
                                     required
                                     minLength={2}
+                                    maxLength={100}
+                                    disabled={status === 'sending'}
                                 />
                             </div>
 
@@ -210,6 +218,8 @@ function Contact() {
                                     onChange={updateField}
                                     autoComplete="email"
                                     required
+                                    maxLength={254}
+                                    disabled={status === 'sending'}
                                 />
                             </div>
 
@@ -224,31 +234,26 @@ function Contact() {
                                     value={formData.inquiry_type}
                                     onChange={updateField}
                                     required
+                                    disabled={status === 'sending'}
                                 >
                                     <option value="Full-time opportunity">
                                         Full-time opportunity
                                     </option>
-
                                     <option value="Freelance project">
                                         Freelance project
                                     </option>
-
                                     <option value="Brand identity">
                                         Brand identity
                                     </option>
-
                                     <option value="UI/UX design">
                                         UI/UX design
                                     </option>
-
                                     <option value="Graphic design">
                                         Graphic design
                                     </option>
-
                                     <option value="Collaboration">
                                         Collaboration
                                     </option>
-
                                     <option value="Other">
                                         Something else
                                     </option>
@@ -269,10 +274,11 @@ function Contact() {
                                     rows={5}
                                     required
                                     minLength={10}
+                                    maxLength={3000}
+                                    disabled={status === 'sending'}
                                 />
                             </div>
 
-                            {/* FORM STATUS */}
                             {statusMessage && (
                                 <div
                                     className={`contact-status ${status}`}
@@ -289,7 +295,6 @@ function Contact() {
                                 </div>
                             )}
 
-                            {/* SUBMIT BUTTON */}
                             <button
                                 type="submit"
                                 className="contact-submit"
@@ -297,7 +302,10 @@ function Contact() {
                             >
                                 {status === 'sending' ? (
                                     <>
-                                        <LoaderCircle className="contact-spinner" size={19} />
+                                        <LoaderCircle
+                                            className="contact-spinner"
+                                            size={19}
+                                        />
                                         SENDING YOUR MESSAGE
                                     </>
                                 ) : (
@@ -317,7 +325,6 @@ function Contact() {
 
                 </div>
 
-                {/* BOTTOM BAR */}
                 <div className="contact-bottom">
                     <span>DESIGNED WITH INTENTION.</span>
                     <span>BUILT TO CREATE IMPACT.</span>

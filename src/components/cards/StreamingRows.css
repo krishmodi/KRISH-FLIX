@@ -1,0 +1,439 @@
+
+/* =========================================
+   KRISH-FLIX — CINEMATIC PROJECT CATALOGUE
+========================================= */
+
+.streaming-catalogue {
+  width: 100%;
+  padding: 0 0 20px;
+}
+
+.streaming-row {
+  position: relative;
+  margin-bottom: 58px;
+}
+
+.streaming-row-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.streaming-row-heading-copy {
+  min-width: 0;
+}
+
+.streaming-row-mood {
+  color: var(--experience-accent, #e50914);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 2.2px;
+}
+
+.streaming-row-heading h3 {
+  margin-top: 8px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(19px, 2.5vw, 25px);
+  font-weight: 800;
+  letter-spacing: -.6px;
+}
+
+.streaming-row-heading p {
+  margin-top: 7px;
+  color: #888;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.streaming-row-controls {
+  display: flex;
+  flex-shrink: 0;
+  gap: 7px;
+}
+
+.streaming-row-controls button {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #393939;
+  border-radius: 3px;
+  background: #171717;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.streaming-row-controls button:hover {
+  border-color: #e50914;
+  background: #e50914;
+}
+
+.streaming-row-controls button:focus-visible,
+.streaming-project-card:focus-visible {
+  outline: 2px solid var(--experience-accent, #e50914);
+  outline-offset: 4px;
+}
+
+/* HORIZONTAL TRACK */
+
+.streaming-row-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 260px;
+  gap: 15px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 5px 3px 18px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.streaming-row-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* PROJECT CARD */
+
+.streaming-project-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #292929;
+  border-radius: 4px;
+  background: #131313;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition:
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+.streaming-project-card:hover {
+  z-index: 2;
+  transform: translateY(-7px);
+  border-color: var(--card-accent);
+  box-shadow: 0 18px 35px rgba(0,0,0,.42);
+}
+
+/* ARTWORK */
+
+.streaming-project-image {
+  position: relative;
+  height: 175px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      color-mix(in srgb, var(--card-accent) 35%, #242424),
+      #111 75%
+    );
+}
+
+.streaming-project-image img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition:
+    transform .65s cubic-bezier(.2,.8,.2,1),
+    filter .4s ease;
+}
+
+.streaming-project-card:hover .streaming-project-image img {
+  transform: scale(1.09);
+  filter: saturate(1.12);
+}
+
+.streaming-project-image-overlay {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.25) 0%,
+      transparent 35%,
+      rgba(0,0,0,.22) 58%,
+      rgba(0,0,0,.9) 100%
+    ),
+    linear-gradient(
+      110deg,
+      color-mix(in srgb, var(--card-accent) 13%, transparent),
+      transparent 65%
+    );
+  transition: background .3s ease;
+}
+
+.streaming-project-card:hover .streaming-project-image-overlay {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.15),
+      rgba(0,0,0,.08) 40%,
+      rgba(0,0,0,.92)
+    ),
+    linear-gradient(
+      110deg,
+      color-mix(in srgb, var(--card-accent) 25%, transparent),
+      transparent 75%
+    );
+}
+
+.streaming-project-number {
+  position: absolute;
+  top: 12px;
+  left: 13px;
+  color: rgba(255,255,255,.85);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.streaming-project-type {
+  position: absolute;
+  bottom: 13px;
+  left: 13px;
+  max-width: calc(100% - 55px);
+  color: #fff;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.streaming-project-open {
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.5);
+  border-radius: 50%;
+  background: rgba(0,0,0,.4);
+  color: #fff;
+  opacity: .75;
+  transition:
+    transform .3s ease,
+    background .3s ease,
+    opacity .3s ease;
+}
+
+.streaming-project-card:hover .streaming-project-open {
+  transform: rotate(45deg);
+  background: var(--card-accent);
+  opacity: 1;
+}
+
+/* HOVER CONTENT */
+
+.streaming-project-hover-content {
+  position: absolute;
+  right: 13px;
+  bottom: 40px;
+  left: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity .3s ease,
+    transform .3s ease;
+}
+
+.streaming-project-card:hover .streaming-project-hover-content,
+.streaming-project-card:focus-visible .streaming-project-hover-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.streaming-project-hover-label {
+  overflow: hidden;
+  color: #ccc;
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.streaming-project-view {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* PROJECT INFORMATION */
+
+.streaming-project-info {
+  padding: 15px 14px 16px;
+}
+
+.streaming-project-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.streaming-project-info h4 {
+  overflow: hidden;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .3px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.streaming-project-episode {
+  flex-shrink: 0;
+  color: var(--card-accent);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .8px;
+}
+
+.streaming-project-info > p {
+  margin-top: 6px;
+  overflow: hidden;
+  color: #929292;
+  font-size: 9px;
+  line-height: 1.6;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.streaming-project-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: #777;
+  font-size: 8px;
+  letter-spacing: .6px;
+}
+
+.streaming-project-meta-dot {
+  width: 3px;
+  height: 3px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--card-accent);
+}
+
+/* CLIENT PROFILE */
+
+.catalogue-client .streaming-row-mood {
+  color: #ff754d;
+}
+
+.catalogue-client .streaming-project-card:hover {
+  border-color: var(--card-accent, #ff754d);
+}
+
+/* DESIGNER PROFILE */
+
+.catalogue-designer .streaming-row-mood {
+  color: #a78bfa;
+}
+
+.catalogue-designer .streaming-project-card:hover {
+  border-color: var(--card-accent, #a78bfa);
+}
+
+/* TABLET */
+
+@media (max-width: 850px) {
+  .streaming-row-track {
+    grid-auto-columns: 230px;
+  }
+
+  .streaming-project-image {
+    height: 155px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .streaming-row {
+    margin-bottom: 40px;
+  }
+
+  .streaming-row-heading {
+    align-items: center;
+    gap: 10px;
+  }
+
+  .streaming-row-heading h3 {
+    font-size: 18px;
+  }
+
+  .streaming-row-heading p {
+    max-width: 260px;
+    font-size: 10px;
+  }
+
+  .streaming-row-controls {
+    gap: 5px;
+  }
+
+  .streaming-row-controls button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .streaming-row-track {
+    grid-auto-columns: 76vw;
+    gap: 11px;
+    padding-bottom: 15px;
+  }
+
+  .streaming-project-image {
+    height: 170px;
+  }
+
+  .streaming-project-hover-content {
+    opacity: 1;
+    transform: none;
+  }
+
+  .streaming-project-open {
+    opacity: 1;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .streaming-row-track {
+    scroll-behavior: auto;
+  }
+
+  .streaming-project-card,
+  .streaming-project-card * {
+    transition: none !important;
+  }
+}

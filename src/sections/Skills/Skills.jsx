@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import {
     Palette,
@@ -5,7 +6,9 @@ import {
     Shapes,
     Box,
     Code2,
-    ChevronDown
+    ChevronRight,
+    ArrowUpRight,
+    Wrench
 } from 'lucide-react'
 
 import './Skills.css'
@@ -15,7 +18,7 @@ const skillCategories = [
         id: 'product',
         number: '01',
         title: 'PRODUCT DESIGN',
-        description: 'Building meaningful digital experiences.',
+        description: 'Building meaningful digital experiences through research, structure and thoughtful interaction.',
         icon: PanelsTopLeft,
         skills: [
             'Product Design',
@@ -32,7 +35,7 @@ const skillCategories = [
         id: 'brand',
         number: '02',
         title: 'BRAND & IDENTITY',
-        description: 'Creating distinctive visual identities.',
+        description: 'Creating distinctive visual identities that give brands a recognisable personality.',
         icon: Palette,
         skills: [
             'Brand Strategy',
@@ -47,7 +50,7 @@ const skillCategories = [
         id: 'graphics',
         number: '03',
         title: 'GRAPHIC DESIGN',
-        description: 'Visual storytelling through graphic design.',
+        description: 'Visual storytelling through compositions, campaigns and creative communication.',
         icon: Shapes,
         skills: [
             'Social Media Design',
@@ -62,7 +65,7 @@ const skillCategories = [
         id: '3d',
         number: '04',
         title: '3D & 2D DESIGN',
-        description: 'Exploring form, motion and visual expression.',
+        description: 'Exploring form, composition, movement and visual expression.',
         icon: Box,
         skills: [
             '3D Design',
@@ -77,7 +80,7 @@ const skillCategories = [
         id: 'development',
         number: '05',
         title: 'FRONTEND DEVELOPMENT',
-        description: 'Bringing design concepts into the browser.',
+        description: 'Turning visual concepts into responsive and functional web experiences.',
         icon: Code2,
         skills: [
             'HTML',
@@ -90,15 +93,19 @@ const skillCategories = [
     }
 ]
 
-const tools = [
-    'Figma',
-    'Adobe Photoshop',
-    'Adobe Illustrator',
-    'Canva',
-    'HTML',
-    'CSS',
-    'React',
-    'Animation Tools'
+const toolGroups = [
+    {
+        label: 'DESIGN & PROTOTYPING',
+        tools: ['Figma', 'Adobe Photoshop', 'Adobe Illustrator', 'Canva']
+    },
+    {
+        label: 'DEVELOPMENT',
+        tools: ['HTML', 'CSS', 'JavaScript', 'React', 'Tailwind CSS']
+    },
+    {
+        label: 'CREATIVE',
+        tools: ['Animation Tools', '2D Design', '3D Design']
+    }
 ]
 
 function Skills() {
@@ -106,107 +113,183 @@ function Skills() {
 
     const activeSkill = skillCategories.find(
         (category) => category.id === activeCategory
-    )
+    ) || skillCategories[0]
+
+    const ActiveIcon = activeSkill.icon
 
     return (
         <section className="skills-section" id="skills">
+
+            {/* Section heading */}
 
             <div className="skills-heading">
                 <span className="section-eyebrow">
                     02 / MY CREATIVE UNIVERSE
                 </span>
 
-                <h2>
-                    MORE THAN
-                    <span> JUST DESIGN.</span>
-                </h2>
+                <div className="skills-heading-main">
+                    <h2>
+                        MORE THAN
+                        <span> JUST DESIGN.</span>
+                    </h2>
 
-                <p>
-                    A combination of creative thinking, design
-                    skills and frontend development.
-                </p>
+                    <p>
+                        A creative mix of design thinking, visual
+                        exploration and frontend development.
+                        Different skills, one goal: making digital
+                        experiences better.
+                    </p>
+                </div>
             </div>
 
-            <div className="skills-layout">
+            {/* Skills explorer */}
 
-                {/* Category Navigation */}
-                <div className="skills-category-list">
-                    {skillCategories.map((category) => {
-                        const Icon = category.icon
+            <div className="skills-explorer">
 
-                        return (
-                            <button
-                                key={category.id}
-                                className={`skill-category ${activeCategory === category.id ? 'active' : ''
-                                    }`}
-                                onClick={() => setActiveCategory(category.id)}
-                            >
-                                <span className="skill-category-number">
-                                    {category.number}
-                                </span>
-
-                                <Icon size={19} />
-
-                                <span className="skill-category-title">
-                                    {category.title}
-                                </span>
-
-                                <ChevronDown
-                                    className="skill-category-arrow"
-                                    size={17}
-                                />
-                            </button>
-                        )
-                    })}
+                <div className="skills-explorer-top">
+                    <span>DISCIPLINES / 05</span>
+                    <span>SELECT A CATEGORY TO EXPLORE</span>
                 </div>
 
-                {/* Selected Category */}
-                <div className="skills-detail" key={activeCategory}>
+                <div className="skills-layout">
 
-                    <span className="skills-detail-label">
-                        SELECTED DISCIPLINE / {activeSkill.number}
-                    </span>
+                    <div className="skills-category-list" aria-label="Skill categories">
+                        {skillCategories.map((category) => {
+                            const Icon = category.icon
+                            const isActive = activeCategory === category.id
 
-                    <h3>{activeSkill.title}</h3>
+                            return (
+                                <button
+                                    key={category.id}
+                                    type="button"
+                                    className={`skill-category ${isActive ? 'active' : ''}`}
+                                    onClick={() => setActiveCategory(category.id)}
+                                    aria-pressed={isActive}
+                                >
+                                    <span className="skill-category-number">
+                                        {category.number}
+                                    </span>
 
-                    <p>{activeSkill.description}</p>
+                                    <Icon size={19} strokeWidth={1.6} />
 
-                    <div className="skills-tags">
-                        {activeSkill.skills.map((skill, index) => (
-                            <span
-                                key={skill}
-                                style={{ '--skill-index': index }}
-                            >
-                                {skill}
+                                    <span className="skill-category-title">
+                                        {category.title}
+                                    </span>
+
+                                    <ChevronRight
+                                        className="skill-category-arrow"
+                                        size={17}
+                                    />
+                                </button>
+                            )
+                        })}
+                    </div>
+
+                    <div
+                        className="skills-detail"
+                        key={activeCategory}
+                        aria-live="polite"
+                    >
+
+                        <div className="skills-detail-top">
+                            <span className="skills-detail-label">
+                                SELECTED DISCIPLINE / {activeSkill.number}
                             </span>
-                        ))}
-                    </div>
 
-                    <div className="skills-detail-footer">
-                        <span>CREATIVE THINKING</span>
-                        <span>DESIGN EXECUTION</span>
-                        <span>CONTINUOUS LEARNING</span>
+                            <ActiveIcon
+                                className="skills-detail-icon"
+                                size={35}
+                                strokeWidth={1.2}
+                            />
+                        </div>
+
+                        <h3>{activeSkill.title}</h3>
+
+                        <p className="skills-detail-description">
+                            {activeSkill.description}
+                        </p>
+
+                        <div className="skills-tags">
+                            {activeSkill.skills.map((skill, index) => (
+                                <span
+                                    key={skill}
+                                    style={{ '--skill-index': index }}
+                                >
+                                    <small>
+                                        {String(index + 1).padStart(2, '0')}
+                                    </small>
+                                    {skill}
+                                </span>
+                            ))}
+                        </div>
+
+                        <div className="skills-detail-footer">
+                            <span>THINK</span>
+                            <span className="skills-footer-line" />
+                            <span>CREATE</span>
+                            <span className="skills-footer-line" />
+                            <span>REFINE</span>
+                        </div>
+
                     </div>
 
                 </div>
-
             </div>
 
-            {/* Tools */}
+            {/* Toolkit */}
+
             <div className="tools-section">
 
                 <div className="tools-heading">
-                    <span>THE TOOLKIT</span>
-                    <h3>TOOLS OF THE TRADE.</h3>
+                    <div>
+                        <span className="section-eyebrow">
+                            THE CREATIVE ARSENAL
+                        </span>
+
+                        <h3>TOOLS OF THE TRADE.</h3>
+                    </div>
+
+                    <div className="tools-heading-icon">
+                        <Wrench size={22} strokeWidth={1.4} />
+                    </div>
                 </div>
 
-                <div className="tools-grid">
-                    {tools.map((tool, index) => (
-                        <div className="tool-card" key={tool}>
-                            <span>0{index + 1}</span>
-                            <strong>{tool}</strong>
+                <div className="tools-groups">
+                    {toolGroups.map((group, groupIndex) => (
+                        <div className="tools-group" key={group.label}>
+
+                            <div className="tools-group-heading">
+                                <span>0{groupIndex + 1}</span>
+                                <h4>{group.label}</h4>
+                                <span className="tools-group-count">
+                                    {String(group.tools.length).padStart(2, '0')} TOOLS
+                                </span>
+                            </div>
+
+                            <div className="tools-grid">
+                                {group.tools.map((tool, index) => (
+                                    <div className="tool-card" key={tool}>
+                                        <span className="tool-card-number">
+                                            {String(index + 1).padStart(2, '0')}
+                                        </span>
+
+                                        <strong>{tool}</strong>
+
+                                        <ArrowUpRight
+                                            className="tool-card-arrow"
+                                            size={16}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+
                         </div>
                     ))}
+                </div>
+
+                <div className="tools-bottom-note">
+                    <span className="tools-note-dot" />
+                    ALWAYS EXPLORING. ALWAYS LEARNING.
                 </div>
 
             </div>

@@ -13,7 +13,13 @@ export const projects = [
         description:
             'A chat application designed from scratch, shaped by user research and real communication preferences.',
         image: '/images/posters/chatnation.webp',
-        screenshots: [],
+        screenshots: [
+            '/images/projects/chatnation/overview.webp',
+            '/images/projects/chatnation/chat-list.webp',
+            '/images/projects/chatnation/conversation.webp',
+            '/images/projects/chatnation/user-profile.webp',
+            '/images/projects/chatnation/settings.webp',
+        ],
         theme: 'chatnation',
         accent: '#756BFF',
         featured: true,
