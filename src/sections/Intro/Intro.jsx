@@ -1,52 +1,95 @@
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Volume2, VolumeX } from 'lucide-react'
 import './Intro.css'
 
 const INTRO_DURATION = 5800
 
-function playCinematicSound() {
-    const AudioContext =
+// Original cinematic startup sound — not a recording of Netflix audio.
+async function playCinematicSound() {
+    const AudioContextClass =
         window.AudioContext || window.webkitAudioContext
 
-    if (!AudioContext) return null
+    if (!AudioContextClass) return null
 
-    const context = new AudioContext()
+    const context = new AudioContextClass()
+    await context.resume()
+
     const master = context.createGain()
+    const compressor = context.createDynamicsCompressor()
 
     master.gain.setValueAtTime(0.0001, context.currentTime)
     master.gain.exponentialRampToValueAtTime(
-        0.12,
-        context.currentTime + 0.15
+        0.22,
+        context.currentTime + 0.12
     )
     master.gain.exponentialRampToValueAtTime(
         0.0001,
-        context.currentTime + 1.8
+        context.currentTime + 2.4
     )
 
-    master.connect(context.destination)
+    master.connect(compressor)
+    compressor.connect(context.destination)
 
-    // Original synthesized cinematic low-frequency sweep
-    const oscillator = context.createOscillator()
-    const oscillatorGain = context.createGain()
+    const now = context.currentTime
 
-    oscillator.type = 'sawtooth'
-    oscillator.frequency.setValueAtTime(
-        90,
-        context.currentTime
-    )
-    oscillator.frequency.exponentialRampToValueAtTime(
-        38,
-        context.currentTime + 1.6
-    )
+    // Deep cinematic bass impact
+    const bass = context.createOscillator()
+    const bassGain = context.createGain()
 
-    oscillatorGain.gain.value = 0.35
+    bass.type = 'triangle'
+    bass.frequency.setValueAtTime(72, now)
+    bass.frequency.exponentialRampToValueAtTime(34, now + 1.7)
 
-    oscillator.connect(oscillatorGain)
-    oscillatorGain.connect(master)
+    bassGain.gain.setValueAtTime(0.8, now)
+    bassGain.gain.exponentialRampToValueAtTime(0.001, now + 1.8)
 
-    oscillator.start()
-    oscillator.stop(context.currentTime + 1.9)
+    bass.connect(bassGain)
+    bassGain.connect(master)
+
+    bass.start(now)
+    bass.stop(now + 1.9)
+
+    // Short cinematic tonal rise
+    const rise = context.createOscillator()
+    const riseGain = context.createGain()
+
+    rise.type = 'sine'
+    rise.frequency.setValueAtTime(180, now + 0.08)
+    rise.frequency.exponentialRampToValueAtTime(520, now + 1.1)
+
+    riseGain.gain.setValueAtTime(0.001, now)
+    riseGain.gain.linearRampToValueAtTime(0.16, now + 0.35)
+    riseGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5)
+
+    rise.connect(riseGain)
+    riseGain.connect(master)
+
+    rise.start(now)
+    rise.stop(now + 1.6)
+
+        // Subtle final bell tones
+        ;[440, 660].forEach((frequency, index) => {
+            const bell = context.createOscillator()
+            const bellGain = context.createGain()
+            const start = now + 0.95 + index * 0.13
+
+            bell.type = 'sine'
+            bell.frequency.setValueAtTime(frequency, start)
+
+            bellGain.gain.setValueAtTime(0.001, start)
+            bellGain.gain.linearRampToValueAtTime(0.055, start + 0.04)
+            bellGain.gain.exponentialRampToValueAtTime(
+                0.001,
+                start + 1.1
+            )
+
+            bell.connect(bellGain)
+            bellGain.connect(master)
+
+            bell.start(start)
+            bell.stop(start + 1.15)
+        })
 
     return context
 }
@@ -56,24 +99,32 @@ function Intro({ onComplete }) {
     const [isLeaving, setIsLeaving] = useState(false)
 
     const timerRef = useRef(null)
+    const exitTimerRef = useRef(null)
     const audioRef = useRef(null)
     const completedRef = useRef(false)
 
-    const finishIntro = () => {
+    const stopSound = useCallback(() => {
+        if (audioRef.current) {
+            audioRef.current.close().catch(() => { })
+            audioRef.current = null
+        }
+
+        setSoundEnabled(false)
+    }, [])
+
+    const finishIntro = useCallback(() => {
         if (completedRef.current) return
 
         completedRef.current = true
         setIsLeaving(true)
 
         clearTimeout(timerRef.current)
+        stopSound()
 
-        audioRef.current?.close().catch(() => { })
-        audioRef.current = null
-
-        setTimeout(() => {
+        exitTimerRef.current = setTimeout(() => {
             onComplete?.()
         }, 650)
-    }
+    }, [onComplete, stopSound])
 
     useEffect(() => {
         const reducedMotion = window.matchMedia(
@@ -86,7 +137,10 @@ function Intro({ onComplete }) {
         )
 
         const handleKeyDown = (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
+            if (
+                event.key === 'Enter' ||
+                event.key === ' '
+            ) {
                 event.preventDefault()
                 finishIntro()
             }
@@ -96,28 +150,29 @@ function Intro({ onComplete }) {
 
         return () => {
             clearTimeout(timerRef.current)
+            clearTimeout(exitTimerRef.current)
             window.removeEventListener('keydown', handleKeyDown)
+
             audioRef.current?.close().catch(() => { })
+            audioRef.current = null
         }
-    }, [])
+    }, [finishIntro])
 
     const toggleSound = async () => {
         if (soundEnabled) {
-            audioRef.current?.close().catch(() => { })
-            audioRef.current = null
-            setSoundEnabled(false)
+            stopSound()
             return
         }
 
         try {
-            audioRef.current = playCinematicSound()
+            const context = await playCinematicSound()
 
-            if (audioRef.current?.state === 'suspended') {
-                await audioRef.current.resume()
-            }
+            if (!context) return
 
-            setSoundEnabled(Boolean(audioRef.current))
-        } catch {
+            audioRef.current = context
+            setSoundEnabled(true)
+        } catch (error) {
+            console.warn('Intro audio could not start:', error)
             setSoundEnabled(false)
         }
     }
@@ -127,16 +182,13 @@ function Intro({ onComplete }) {
             className={`intro-screen ${isLeaving ? 'intro-exit' : ''}`}
             aria-label="Krish Modi portfolio introduction"
         >
-            {/* Background atmosphere */}
             <div className="intro-background">
                 <div className="intro-red-glow" />
                 <div className="intro-vignette" />
                 <div className="intro-grain" />
             </div>
 
-            {/* Intro content */}
             <section className="intro-content">
-
                 <p className="intro-eyebrow">
                     AN ORIGINAL PORTFOLIO EXPERIENCE
                 </p>
@@ -148,7 +200,7 @@ function Intro({ onComplete }) {
 
                     <div className="intro-series-wrapper">
                         <span className="intro-series">
-                            THE SERIES
+                            PRODUCT DESIGNER
                         </span>
                     </div>
                 </div>
@@ -158,24 +210,20 @@ function Intro({ onComplete }) {
                 </p>
 
                 <div className="intro-divider" />
-
             </section>
 
-            {/* Bottom controls */}
             <footer className="intro-footer">
-
                 <span className="intro-season">
-                    SEASON 01 &nbsp;·&nbsp; THE BEGINNING
+                    PRODUCT DESIGN &nbsp;·&nbsp; CREATIVE THINKING
                 </span>
 
                 <div className="intro-controls">
-
                     <button
+                        type="button"
                         className="intro-sound-button"
                         onClick={toggleSound}
-                        aria-label={
-                            soundEnabled ? 'Mute sound' : 'Enable sound'
-                        }
+                        aria-label={soundEnabled ? 'Mute sound' : 'Enable sound'}
+                        aria-pressed={soundEnabled}
                     >
                         {soundEnabled
                             ? <Volume2 size={17} />
@@ -188,16 +236,15 @@ function Intro({ onComplete }) {
                     </button>
 
                     <button
+                        type="button"
                         className="intro-skip-button"
                         onClick={finishIntro}
                     >
                         SKIP INTRO
                         <span>↗</span>
                     </button>
-
                 </div>
             </footer>
-
         </main>
     )
 }

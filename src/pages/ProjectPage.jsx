@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
     ArrowLeft,
@@ -37,23 +37,29 @@ function ProjectPage() {
 
     const isChatNation = slug === 'chatnation'
 
-    const closeLightbox = () => setActiveImage(null)
+    const closeLightbox = useCallback(() => {
+        setActiveImage(null)
+    }, [])
 
-    const showImage = (direction) => {
+    const showImage = useCallback((direction) => {
         setActiveImage((current) => {
             const index = screenshots.indexOf(current)
 
-            if (index === -1 || screenshots.length === 0) return null
+            if (index === -1 || screenshots.length === 0) {
+                return null
+            }
 
             const nextIndex =
                 (index + direction + screenshots.length) % screenshots.length
 
             return screenshots[nextIndex]
         })
-    }
+    }, [screenshots])
 
     useEffect(() => {
         if (!activeImage) return
+
+        const previousOverflow = document.body.style.overflow
 
         const handleKeyDown = (event) => {
             if (event.key === 'Escape') closeLightbox()
@@ -66,9 +72,9 @@ function ProjectPage() {
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown)
-            document.body.style.overflow = ''
+            document.body.style.overflow = previousOverflow
         }
-    }, [activeImage, screenshots])
+    }, [activeImage, closeLightbox, showImage])
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'instant' })
@@ -374,64 +380,72 @@ function ProjectPage() {
 
             {/* Visual archive for other projects */}
 
-            {!isChatNation && (
-                <section className="project-gallery" id="project-gallery">
-                    <div className="project-section-heading">
-                        <span className="project-section-number">
-                            06 / THE VISUAL ARCHIVE
-                        </span>
+            {/* ChatNation interactive screen explorer */}
+            {isChatNation && <ChatNationShowcase />}
 
-                        <h2>
-                            {caseStudy?.galleryTitle || 'Frames from the process'}
-                            <span>.</span>
-                        </h2>
+            {/* Visual archive for every project */}
+            <section className="project-gallery" id="project-gallery">
+                <div className="project-section-heading">
+                    <span className="project-section-number">
+                        06 / THE VISUAL ARCHIVE
+                    </span>
+
+                    <h2>
+                        {caseStudy?.galleryTitle || 'Frames from the process'}
+                        <span>.</span>
+                    </h2>
+
+                    <p>
+                        {caseStudy?.galleryDescription ||
+                            'Selected screens, compositions and visual explorations.'}
+                    </p>
+                </div>
+
+                {screenshots.length > 0 ? (
+                    <div className="project-gallery-grid">
+                        {screenshots.map((image, index) => (
+                            <button
+                                className="project-gallery-item"
+                                key={image}
+                                type="button"
+                                onClick={() => setActiveImage(image)}
+                                aria-label={`View ${project.title} image ${index + 1}`}
+                            >
+                                <img
+                                    src={image}
+                                    alt={`${project.title} project visual ${index + 1}`}
+                                    loading="lazy"
+                                    onError={(event) => {
+                                        event.currentTarget.closest(
+                                            '.project-gallery-item'
+                                        )?.classList.add('image-unavailable')
+                                    }}
+                                />
+
+                                <span className="gallery-image-index">
+                                    VIEW {String(index + 1).padStart(2, '0')}
+                                    <ArrowUpRight size={16} />
+                                </span>
+                            </button>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="project-gallery-empty">
+                        <div className="gallery-empty-icon">
+                            <Layers3 size={28} strokeWidth={1.3} />
+                        </div>
+
+                        <span>THE VISUAL ARCHIVE</span>
+
+                        <h3>More frames are coming.</h3>
 
                         <p>
-                            {caseStudy?.galleryDescription ||
-                                'Selected screens, compositions and visual explorations.'}
+                            Project visuals and mockups will appear here as
+                            the final assets are added.
                         </p>
                     </div>
-
-                    {screenshots.length > 0 ? (
-                        <div className="project-gallery-grid">
-                            {screenshots.map((image, index) => (
-                                <button
-                                    className="project-gallery-item"
-                                    key={`${image}-${index}`}
-                                    type="button"
-                                    onClick={() => setActiveImage(image)}
-                                    aria-label={`View project image ${index + 1}`}
-                                >
-                                    <img
-                                        src={image}
-                                        alt={`${project.title} visual ${index + 1}`}
-                                        loading="lazy"
-                                    />
-
-                                    <span className="gallery-image-index">
-                                        VIEW {String(index + 1).padStart(2, '0')}
-                                        <ArrowUpRight size={16} />
-                                    </span>
-                                </button>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="project-gallery-empty">
-                            <div className="gallery-empty-icon">
-                                <Layers3 size={28} strokeWidth={1.3} />
-                            </div>
-
-                            <span>THE VISUAL ARCHIVE</span>
-                            <h3>More frames are coming.</h3>
-
-                            <p>
-                                Project visuals and mockups will appear here as
-                                the final assets are added.
-                            </p>
-                        </div>
-                    )}
-                </section>
-            )}
+                )}
+            </section>
 
             {/* Next project */}
 
