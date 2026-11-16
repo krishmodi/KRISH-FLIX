@@ -15,17 +15,14 @@ export const portfolio = {
 
     location: 'Ahmedabad, India',
 
-    relocation: 'Relocating soon',
-
     availability: 'Open to full-time jobs and freelance',
 
-    email: '[add]',
+    email: 'krishpmodi@gmail.com',
 
     links: {
-        linkedin: '[add]',
-        behance: '[add]',
-        dribbble: '[add]',
-        github: '[add]',
+        linkedin: 'https://www.linkedin.com/in/krish-modi-ui-ux/',
+        behance: 'https://www.behance.net/krishmodi5',
+        github: 'https://github.com/krishmodi',
     },
 
     photo: '/images/profile/krish-cutout.webp',

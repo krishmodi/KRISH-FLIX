@@ -1557,3 +1557,339 @@
     transition: none !important;
   }
 }
+
+/* =========================================
+   STAGE 26 — PREMIUM MOTION & VISUAL POLISH
+========================================= */
+
+.home-page {
+    --motion-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* HERO ENTRANCE */
+
+.streaming-hero-content {
+    animation: heroContentEnter 1s var(--motion-ease) both;
+}
+
+.streaming-featured-label {
+    animation: heroContentEnter .75s .08s var(--motion-ease) both;
+}
+
+.streaming-hero-category {
+    animation: heroContentEnter .8s .16s var(--motion-ease) both;
+}
+
+.streaming-hero-title {
+    animation: heroContentEnter .9s .22s var(--motion-ease) both;
+}
+
+.streaming-hero-description {
+    animation: heroContentEnter .9s .34s var(--motion-ease) both;
+}
+
+.streaming-hero-actions {
+    animation: heroContentEnter .9s .44s var(--motion-ease) both;
+}
+
+.streaming-hero-meta {
+    animation: heroContentEnter .9s .54s var(--motion-ease) both;
+}
+
+@keyframes heroContentEnter {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 24px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* SUBTLE BACKDROP MOVEMENT */
+
+.streaming-hero-image {
+    animation:
+        streamingHeroReveal 1.4s ease both,
+        heroImageDrift 22s ease-in-out 1.4s infinite alternate;
+    will-change: transform;
+}
+
+@keyframes heroImageDrift {
+    from {
+        transform: scale(1.015);
+    }
+
+    to {
+        transform: scale(1.065);
+    }
+}
+
+/* SCROLL REVEALS */
+
+.motion-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity .85s var(--motion-ease),
+        transform .85s var(--motion-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+.motion-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* OPENING STORY */
+
+.experience-story {
+    position: relative;
+}
+
+.experience-story-content {
+    transition: transform .6s var(--motion-ease);
+}
+
+.experience-story:hover .experience-story-content {
+    transform: translateX(5px);
+}
+
+.experience-story-stamp {
+    transition:
+        opacity .5s ease,
+        transform .7s var(--motion-ease);
+}
+
+.experience-story:hover .experience-story-stamp {
+    opacity: .12;
+    transform: rotate(-7deg) scale(1.04);
+}
+
+/* SECTION HEADINGS */
+
+.experience-section-heading h2 {
+    letter-spacing: .4px;
+    transition: letter-spacing .4s ease;
+}
+
+.experience-section-heading:hover h2 {
+    letter-spacing: 1px;
+}
+
+.experience-eyebrow {
+    display: inline-block;
+    transition: letter-spacing .3s ease;
+}
+
+.experience-section-heading:hover .experience-eyebrow {
+    letter-spacing: 3.8px;
+}
+
+/* SERVICE CARDS */
+
+.experience-service-card {
+    isolation: isolate;
+    transition:
+        transform .45s var(--motion-ease),
+        border-color .35s ease,
+        background .35s ease;
+}
+
+.experience-service-card::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    right: -65px;
+    bottom: -85px;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: var(--experience-accent);
+    opacity: 0;
+    filter: blur(65px);
+    transition: opacity .5s ease;
+}
+
+.experience-service-card:hover {
+    transform: translateY(-7px);
+    background: #191919;
+}
+
+.experience-service-card:hover::after {
+    opacity: .13;
+}
+
+.experience-service-top svg {
+    transition: transform .4s var(--motion-ease);
+}
+
+.experience-service-card:hover .experience-service-top svg {
+    transform: translateY(-4px) rotate(-7deg);
+}
+
+/* PROCESS */
+
+.experience-process-grid article {
+    position: relative;
+    transition:
+        transform .35s var(--motion-ease),
+        border-color .35s ease;
+}
+
+.experience-process-grid article:hover {
+    transform: translateY(-5px);
+}
+
+/* CREATIVE LAB */
+
+.experience-experiment {
+    overflow: hidden;
+    transition:
+        transform .45s var(--motion-ease),
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+.experience-experiment:hover {
+    box-shadow: 0 18px 45px rgba(0, 0, 0, .25);
+}
+
+.experiment-visual {
+    overflow: hidden;
+}
+
+.experiment-visual svg {
+    transition:
+        transform .6s var(--motion-ease),
+        opacity .4s ease;
+}
+
+.experience-experiment:hover .experiment-visual svg {
+    transform: scale(1.18) rotate(-10deg);
+}
+
+/* CTA BUTTONS */
+
+.experience-resume-card button,
+.experience-client-cta button {
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform .3s var(--motion-ease),
+        filter .3s ease,
+        box-shadow .3s ease;
+}
+
+.experience-resume-card button:hover,
+.experience-client-cta button:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.08);
+    box-shadow: 0 9px 25px color-mix(
+        in srgb,
+        var(--experience-accent) 22%,
+        transparent
+    );
+}
+
+.experience-resume-card button svg,
+.experience-client-cta button svg {
+    transition: transform .3s var(--motion-ease);
+}
+
+.experience-resume-card button:hover svg,
+.experience-client-cta button:hover svg {
+    transform: translate(3px, -3px);
+}
+
+/* FOOTER */
+
+.experience-footer button {
+    transition:
+        color .25s ease,
+        transform .25s ease;
+}
+
+.experience-footer button:hover {
+    transform: translateX(4px);
+}
+
+/* BETTER KEYBOARD FEEDBACK */
+
+.home-page button:focus-visible,
+.home-page a:focus-visible {
+    outline: 2px solid var(--experience-accent);
+    outline-offset: 5px;
+}
+
+/* RESPONSIVE MOTION */
+
+@media (max-width: 600px) {
+    .streaming-hero-image {
+        animation:
+            streamingHeroReveal 1.2s ease both,
+            heroImageDrift 26s ease-in-out 1.2s infinite alternate;
+    }
+
+    .motion-reveal {
+        transform: translateY(18px);
+        transition-duration: .65s;
+    }
+
+    .experience-story:hover .experience-story-content {
+        transform: none;
+    }
+
+    .experience-service-card:hover,
+    .experience-experiment:hover {
+        transform: translateY(-3px);
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page *,
+    .home-page *::before,
+    .home-page *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    .motion-reveal {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+/* =====================================
+   STAGE 26 — SCROLL REVEAL FIX
+===================================== */
+
+.home-page .motion-reveal {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  filter: blur(3px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(.2, .7, .2, 1),
+    filter 700ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.home-page .motion-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page .motion-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}

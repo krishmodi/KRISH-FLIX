@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
     Play,
@@ -109,6 +110,59 @@ const experiments = [
 function HomePage({ profile, onChangeProfile }) {
     const navigate = useNavigate()
     const profileId = profile?.id || 'recruiter'
+    useEffect(() => {
+        const elements = document.querySelectorAll(`
+    .experience-story,
+    .experience-projects,
+    .experience-professional,
+    .experience-services,
+    .experience-process,
+    .experience-client-cta,
+    .experience-lab,
+    .experience-manifesto,
+    .experience-toolkit,
+    .experience-resume-card,
+    .experience-service-card,
+    .experience-experiment
+  `)
+
+        const reducedMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+        ).matches
+
+        if (reducedMotion || !('IntersectionObserver' in window)) {
+            elements.forEach(element => {
+                element.classList.add('is-visible')
+            })
+            return
+        }
+
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible')
+                        observer.unobserve(entry.target)
+                    }
+                })
+            },
+            {
+                threshold: 0.05,
+                rootMargin: '0px 0px 0px 0px'
+            }
+        )
+
+        elements.forEach((element, index) => {
+            element.classList.add('motion-reveal')
+            element.style.setProperty(
+                '--reveal-delay',
+                `${(index % 4) * 90}ms`
+            )
+            observer.observe(element)
+        })
+
+        return () => observer.disconnect()
+    }, [profileId])
     const experience = experiences[profileId] || experiences.recruiter
 
     const orderedProjects = (
