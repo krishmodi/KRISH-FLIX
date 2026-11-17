@@ -28,7 +28,7 @@ const experiences = [
         number: '02',
         role: 'Junior UI/UX & Graphics Designer',
         company: 'AAVATTO PVT LTD',
-        period: 'JUN 2024 — JUN 2025',
+        period: 'JAN 2025 — JUN 2025',
         location: 'India',
         description:
             'Worked on UI/UX and graphic design assignments, contributing to digital product interfaces and visual design deliverables.',
@@ -53,7 +53,7 @@ const education = [
         number: '02',
         degree: 'SCHOOL EDUCATION',
         subject: 'HIGHER SECONDARY / SCHOOL',
-        institution: '[ADD SCHOOL NAME]',
+        institution: 'Shree JMC Vidhyalaya, Mehsana',
         period: 'PASSED OUT 2021',
         result: 'FIRST DIVISION',
         description: 'Completed school education with first division.'

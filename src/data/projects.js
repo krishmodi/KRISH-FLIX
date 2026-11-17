@@ -8,7 +8,7 @@ export const projects = [
         type: 'PRODUCT ORIGINAL',
         season: '01',
         episode: '01',
-        year: '[add]',
+        year: '2025-26',
         role: 'UI/UX DESIGN',
         description:
             'A chat application designed from scratch, shaped by user research and real communication preferences.',
@@ -35,7 +35,7 @@ export const projects = [
         type: 'CONCEPT COLLECTION',
         season: '01',
         episode: '02',
-        year: '[add]',
+        year: '2025-26',
         role: 'UI/UX DESIGN',
         description:
             'A conceptual collection of SaaS dashboards and responsive website experiences exploring interface design, usability and visual presentation.',
@@ -60,7 +60,7 @@ export const projects = [
         type: 'BRAND ORIGINAL',
         season: '01',
         episode: '03',
-        year: '[add]',
+        year: '2026',
         role: 'BRANDING & GRAPHIC DESIGN',
         description:
             'Film studio identity, logo design, promotional posters, website design and production-related creative work.',
