@@ -15,7 +15,7 @@ const experience = [
     {
         company: 'STARLINE SOLUTION PVT LTD',
         role: 'Senior UI/UX & Graphics Designer',
-        period: 'September 2025 — Present',
+        period: 'SEP 2025 — PRESENT',
         description:
             'Working across UI/UX design, graphic design and frontend implementation.',
         points: [
@@ -27,7 +27,7 @@ const experience = [
     {
         company: 'AAVATTO PVT LTD',
         role: 'Junior UI/UX & Graphics Designer',
-        period: 'June 2024 — June 2025',
+        period: 'JAN 2025 — JUN 2025',
         description:
             'Contributed to UI/UX and graphic design assignments.',
         points: [
