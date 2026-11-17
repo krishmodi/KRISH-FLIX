@@ -227,7 +227,7 @@ function HomePage({ profile, onChangeProfile }) {
 
                             <div className="streaming-hero-content">
                                 <div className="streaming-featured-label">
-                                    <span className="streaming-n-mark">N</span>
+                                    <span className="streaming-n-mark">K</span>
                                     <span>KRISH-FLIX ORIGINAL</span>
                                     <span className="streaming-label-divider">|</span>
                                     <span>FEATURED WORK</span>
